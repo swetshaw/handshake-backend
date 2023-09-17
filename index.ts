@@ -79,7 +79,7 @@ app.post('/addProof', async (req: Request, res: Response) => {
     },
   })
   console.log('session fetched ----', session)
-  if (session?.proofs) {
+  if (session?.proofs && session?.proofs.length > 0) {
     // revert if proofs are already present
     res.status(400).send({ message: 'Proofs already submitted' });
     return;
@@ -116,7 +116,7 @@ app.post('/addProof', async (req: Request, res: Response) => {
       },
     })
     console.log('session2Proofs fetched ----', session2)
-    if (session1?.proofs && session2?.proofs) {
+    if (session1?.proofs && session2?.proofs && session1?.proofs.length > 0 && session2?.proofs.length > 0) {
       // send notification to both session1 and session2
       console.log('send notification to both session1 and session2')
     }
@@ -152,7 +152,7 @@ app.get('/checkProofs', async (req: Request, res: Response) => {
       },
     })
     console.log('session2 fetched ----', session2)
-    if (session1?.proofs && session2?.proofs) {
+    if (session1?.proofs && session2?.proofs && session1?.proofs.length > 0 && session2?.proofs.length > 0) {
       res.send({ message: 'Proofs submitted by both parties', sessionProofs1: session1.proofs, sessionProofs2: session2.proofs });
     }
   } else {
