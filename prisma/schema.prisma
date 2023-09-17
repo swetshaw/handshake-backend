@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model sessions {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  session1   Session @relation("session1", fields: [sessionId1], references: [id])
+  session2   Session @relation("session2", fields: [sessionId2], references: [id])
+  sessionId1 String  @db.ObjectId
+  sessionId2 String  @db.ObjectId
+}
+
+model Session {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  sessionId    String     @unique
+  templateLink String
+  fcmToken     String
+  proofs       Json[]
+  sessions1    sessions[] @relation("session1")
+  sessions2    sessions[] @relation("session2")
+}

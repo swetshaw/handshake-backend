@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./
+      dockerfile: ./backend.dockerfile
+    environment:
+      NODE_ENV: ${DATABASE_URL:-PROD}
+    ports:
+      - 5001:5001
+    restart: on-failure
